@@ -1,17 +1,67 @@
 version: '3'
 
 services:
-  gerrit:
-    image: gerritcodereview/gerrit
+  jenkins:
+    image: jenkins/jenkins:2.263.3
     volumes:
-       - git-volume:/var/gerrit/git
-       - index-volume:/var/gerrit/index
-       - cache-volume:/var/gerrit/cache
+      - jenkins-volume:/var/jenkins_home
     ports:
-       - "29418:29418"
-       - "8080:8080"
+      - "8080:8080"
+      - "50000:50000"
+    environment:
+      - JAVA_OPTS=-Dpermissive-script-security.enabled=true
+    restart: always
+
+  tomcat:
+    image: tomcat:9.0
+    volumes:
+      - tomcat-volume:/usr
+    ports:
+      - "8090:8080"
+    restart: always
+
+  sonarqube:
+    image: sonarqube:8.6.1-community
+    volumes:
+      - sonarqube-volume:/opt/sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    restart: always
+
+  artifactory:
+    image: releases-docker.jfrog.io/jfrog/artifactory-oss:latest
+    volumes:
+      - ./artifactory/var/:/var/opt/jfrog/artifactory
+    ports:
+      - "8081:8081"
+      - "8082:8082"
+    restart: always
+  gitea:
+    image: gitea/gitea:1.12.4
+    volumes:
+      - gitea-volume:/data
+    ports:
+      - "3000:3000"
+      - "22:22"
+    depends_on:
+      - mariadb
+    restart: always
+  mariadb:
+    image: mariadb:10
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=admin
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+    volumes:
+      - mariadb-volume:/var/lib/mysql
 
 volumes:
-  git-volume:
-  index-volume:
-  cache-volume:
+  jenkins-volume:
+  tomcat-volume:
+  sonarqube-volume:
+  gitea-volume:
+  mariadb-volume:
