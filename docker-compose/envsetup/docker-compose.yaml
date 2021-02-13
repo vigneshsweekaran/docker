@@ -16,9 +16,18 @@ services:
     image: tomcat:9.0
     volumes:
       - tomcat-volume:/usr
+      - ./context.xml:/tmp/context.xml
+      - ./tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
     ports:
       - "8090:8080"
     restart: always
+    command: >
+      /bin/bash -c "
+        rm -rf /usr/local/tomcat/webapps;
+        cp -r /usr/local/tomcat/webapps.dist /usr/local/tomcat/webapps;
+        cp /tmp/context.xml /usr/local/tomcat/webapps/manager/META-INF/context.xml;
+        catalina.sh run
+      "
 
   sonarqube:
     image: sonarqube:8.6.1-community
@@ -38,6 +47,7 @@ services:
       - "8081:8081"
       - "8082:8082"
     restart: always
+  
   gitea:
     image: gitea/gitea:1.12.4
     volumes:
@@ -48,12 +58,13 @@ services:
     depends_on:
       - mariadb
     restart: always
+  
   mariadb:
     image: mariadb:10
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=admin
-      - MYSQL_DATABASE=admin
+      - MYSQL_DATABASE=gitea
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=admin
     volumes:
