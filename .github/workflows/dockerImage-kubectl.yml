@@ -3,8 +3,9 @@ name: Docker Image CI
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    paths:
+      - 'kubectl/**'
+  
 
 jobs:
 
