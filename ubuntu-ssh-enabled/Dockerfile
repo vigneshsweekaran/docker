@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-RUN apt update && apt install -y openssh-server
+RUN apt update && apt install -y openssh-server vim
 RUN mkdir /var/run/sshd
 RUN echo 'root:password' | chpasswd
 RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
