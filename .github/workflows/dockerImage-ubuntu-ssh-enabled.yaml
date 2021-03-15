@@ -1,5 +1,4 @@
-name: Docker Image CI
-
+name: Ubuntu ssh enabled
 on:
   push:
     branches: [ master ]
