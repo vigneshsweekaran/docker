@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  frontend:
+    image: vigneshsweekaran/easyclaim-backend:latest
+    ports:
+       - "9010:80"
+
+  backend:
+    image: vigneshsweekaran/easyclaim-backend:latest
+    ports:
+       - "9011:8080"
+
+  db:
+    image: mysql:5.6
+    ports:
+       - "9012:3306"
