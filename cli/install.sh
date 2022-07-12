@@ -4,7 +4,7 @@ set -e
 
 # Updating and installing packages
 apt-get update && apt-get install -y gnupg software-properties-common curl python3 python3-pip \
-  ca-certificates ca-certificates
+  ca-certificates ca-certificates unzip
 
 # Installing docker cli
 mkdir -p /etc/apt/keyrings
