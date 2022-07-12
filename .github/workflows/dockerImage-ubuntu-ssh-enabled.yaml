@@ -4,6 +4,7 @@ on:
     branches: [ master ]
     paths:
       - 'ubuntu-ssh-enabled/**'
+  workflow_dispatch:
 
 jobs:
 

@@ -5,6 +5,7 @@ on:
     branches: [ master ]
     paths:
       - 'kubectl/**'
+  workflow_dispatch:
   
 
 jobs:
