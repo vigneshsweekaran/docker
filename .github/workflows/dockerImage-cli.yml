@@ -1,0 +1,26 @@
+name: Kubectl
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'cli/**'
+  
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build ./cli --file cli/Dockerfile --tag vigneshsweekaran/devops:cli-latest
+    - name: Login to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+    - name: Push Docker Image
+      run: docker push vigneshsweekaran/devops:cli-latest
