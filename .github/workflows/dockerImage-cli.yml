@@ -5,7 +5,7 @@ on:
     branches: [ master ]
     paths:
       - 'cli/**'
-  workflow_dispatch
+  workflow_dispatch:
   
 
 jobs:
