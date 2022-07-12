@@ -3,7 +3,17 @@
 set -e
 
 # Updating and installing packages
-apt-get update && apt-get install -y gnupg software-properties-common curl
+apt-get update && apt-get install -y gnupg software-properties-common curl python3 python3-pip \
+  ca-certificates ca-certificates
+
+# Installing docker cli
+mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+apt-get update
+apt-get install docker-ce-cli
 
 # Installing kubectl
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -17,3 +27,15 @@ chmod 700 get_helm.sh
 curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
 apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 apt-get update && apt-get install terraform
+
+# Installing aws cli
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+./aws/install
+
+# Verification
+docker --version
+kubectl version --client
+helm version
+terraform --version
+aws --version
