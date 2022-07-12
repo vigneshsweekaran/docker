@@ -3,7 +3,7 @@
 set -e
 
 # Updating and installing packages
-apt-get update && apt-get install -y gnupg software-properties-common
+apt-get update && apt-get install -y gnupg software-properties-common curl
 
 # Installing kubectl
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
