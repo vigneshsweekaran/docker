@@ -6,6 +6,12 @@ set -e
 apt-get update && apt-get install -y gnupg software-properties-common curl python3 python3-pip \
   ca-certificates ca-certificates unzip tar
 
+# Installing java
+apt-get install -y openjdk-8-jdk
+
+# Installing maven
+wget -cq https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz -O - | tar -xz -C /opt
+
 # Installing docker cli
 mkdir -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
@@ -35,6 +41,8 @@ unzip awscliv2.zip
 ./aws/install
 
 # Verification
+java -version
+mvn --version
 docker --version
 kubectl version --client
 helm version
