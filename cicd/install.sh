@@ -3,7 +3,7 @@
 set -e
 
 # Updating and installing packages
-apt-get update && apt-get install -y gnupg software-properties-common curl python3 python3-pip \
+apt-get update && apt-get install -y gnupg software-properties-common git curl python3 python3-pip \
   ca-certificates ca-certificates unzip tar wget
 
 # Installing java
