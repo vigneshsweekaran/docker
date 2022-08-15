@@ -30,6 +30,9 @@ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scrip
 chmod 700 get_helm.sh
 ./get_helm.sh
 
+# Installing helm push artifactory plugin
+helm plugin install https://github.com/belitre/helm-push-artifactory-plugin --version 1.0.2
+
 # Installing terraform
 curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
 apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
@@ -46,5 +49,6 @@ mvn --version
 docker --version
 kubectl version --client
 helm version
+helm plugin list
 terraform --version
 aws --version
